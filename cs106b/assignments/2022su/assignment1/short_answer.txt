@@ -58,15 +58,35 @@ Soundex
 -------
 
 Q10. What is the Soundex code for "Angelou"? What is the code for your own surname?
-A10. TODO
+A10.
+”Chen” (C500)
 
 Q11. Before writing any code, brainstorm your plan of attack and sketch how you might decompose the work into smaller tasks. Briefly describe your decomposition strategy.
-A11. TODO
+A11.
+Write helper functions that each represent one or several steps and call them in order in the main function.
 
 Q12. Think about one or more examples of a class of names that the Soundex system might not work well for. Explain what this class of names is and why the system might incorrectly group them or mis-categorize one of the names.
 A12. TODO
+- Names sound similar but do not begin with the same letter will never match each other.
+  For instance, C and K sound similar (Corbin & Korbin)
+- Languages written in non-Roman scripts may use multiple systems for converting names
+  from native to Roman characters like Hsiao and Xiao
+Reference https://www.immagic.com/eLibrary/ARCHIVES/GENERAL/LAS_US/L030206B.pdf to know more.
 
-Q13. Suppose you are a software engineer working for the U.S. government. You have been tasked with implementing a system that collects names as part of the Census survey and analyzes these names using a phonetic algorithm. Your boss suggests using Soundex and notes that the algorithm is only expected to work for ASCII-encoded strings, since supporting Unicode would require extra work and time. What would your response be and why? What representational harms might result from building a system that exclusively uses Soundex and/or ASCII?
-A13. TODO
+Q13-1. Suppose you are a software engineer working for the U.S. government. You have been tasked with implementing a system
+     that collects names as part of the Census survey and analyzes these names using a phonetic algorithm. Your boss suggests
+     using Soundex and notes that the algorithm is only expected to work for ASCII-encoded strings, since supporting Unicode
+     would require extra work and time. What would your response be and why?
+
+A13-1
+I probably would not quite support the idea since Soundex is susceptible to a variety of errors.
+It would be bad if wrong conclusions were made from the incorrect census survey.
+
+Q13-2. What representational harms might result from building a system that exclusively uses Soundex and/or ASCII?
+- Non-english letters cannot be represented
+- Soundex does not recognize culture difference much.
+  For example, The familiar “first-   middle-last” model used with many North American and Western European names
+  fits poorly with names from many other cultures around the world.
+
 
 
