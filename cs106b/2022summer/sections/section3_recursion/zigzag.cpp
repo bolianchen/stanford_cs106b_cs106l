@@ -27,8 +27,15 @@ using namespace std;
  */
 
 string zigzag(int n){
-    // TODO: Your code here
-    return "";
+    if (n < 1) {
+        error("non-positive input is not allowed");
+    } else if (n == 1) {
+        return "*";
+    } else if (n == 2) {
+        return "**";
+    } else {
+        return "<" + zigzag(n - 2) + ">";
+    }
 }
 
 

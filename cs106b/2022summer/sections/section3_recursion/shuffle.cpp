@@ -35,8 +35,12 @@ using namespace std;
  */
 
 string randomShuffle(string input){
-    // TODO: Your code here
-    return "";
+    if (input.length() == 0) {
+        return "";
+    } else {
+        int indexToSample = randomInteger(0, input.length() - 1);
+        return input[indexToSample] + randomShuffle(input.erase(indexToSample, 1));
+    }
 }
 
 

@@ -28,8 +28,17 @@ using namespace std;
  */
 
 bool isSubsequence(string big, string small){
-    // TODO: Your code here
-    return false;
+    if (big == small) {
+        return true;
+    } else if (big.length() <= small.length()) {
+        return false;
+    } else {
+        if (big[0] == small[0]) {
+            return isSubsequence(big.substr(1), small.substr(1));
+        } else {
+            return isSubsequence(big.substr(1), small);
+        }
+    }
 }
 
 
