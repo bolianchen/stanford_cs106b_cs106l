@@ -24,9 +24,18 @@ using namespace std;
  * values from the Vector that sum to the target value.
  */
 
+bool canMakeSumHelper(Vector<int> & v, int target, int cur, int index) {
+    if (cur == target) {
+        return true;
+    } else if (index >= v.size()) {
+        return false;
+    } else {
+        return canMakeSumHelper(v, target, cur + v[index], index + 1) || canMakeSumHelper(v, target, cur, index + 1);
+    }
+}
+
 bool canMakeSum(Vector<int>& values, int target) {
-    // TODO: Your code here
-    return false;
+    return canMakeSumHelper(values, target, 0, 0);
 }
 
 /* * * * * Provided Tests Below This Point * * * * */

@@ -76,6 +76,20 @@ void Fraction::multiply(const Fraction &other)
     reduce();
 }
 
+//purpose: to convert the fraction to its reciprocal
+void Fraction::reciprocal()
+{
+    int temp = numer;
+    numer = denom;
+    denom = temp;
+}
+
+//purpose: to compute the division of this fraction by other fraction
+void Fraction::divide(const Fraction &other) {
+    multiply(Fraction(other.denom, other.numer));
+    reduce();
+}
+
 // purpose: To return a decimal
 // value of our fraction
 // arguments: None
@@ -135,4 +149,17 @@ PROVIDED_TEST("Simple Example Demonstrating Existing Functionality") {
 
     res.multiply(threeFifths);
     EXPECT_EQUAL(res.decimal(), 0.12);
+}
+
+STUDENT_TEST("Test reciprocal") {
+    Fraction frac1(4, 5);
+    frac1.reciprocal();
+    EXPECT_EQUAL(frac1.decimal(), 1.25);
+}
+
+STUDENT_TEST("Test divide") {
+    Fraction frac1(4, 5);
+    Fraction frac2(2, 5);
+    frac1.divide(frac2);
+    EXPECT_EQUAL(frac1.decimal(), 2);
 }

@@ -9,9 +9,29 @@ struct BackpackItem {
     int weight;         // You can assume this value will always >= 0
 };
 
+int fillBackpackHelper(Vector<BackpackItem>& items, int remainingCapacity, int curValue, int index) {
+    // return the current value when all the items have been considered or no remaining capacity
+    if (index >= items.size() || remainingCapacity == 0) {
+        return curValue;
+    } else {
+        BackpackItem item = items[index];
+        int choice1 = 0;
+        // add an item only when its weight does not exceed the remaining capacity
+        if (item.weight <= remainingCapacity) {
+            choice1 = fillBackpackHelper(items, remainingCapacity - item.weight,
+                                         curValue + item.survivalValue, index + 1);
+        }
+        int choice2 = fillBackpackHelper(items, remainingCapacity, curValue, index + 1);
+        return max(choice1, choice2);
+    }
+}
+
+/*
+ * Return the maximum survival
+ */
+
 int fillBackpack(Vector<BackpackItem>& items, int targetWeight){
-    // TODO: Fill me in!
-    return 0;
+    return fillBackpackHelper(items, targetWeight, 0, 0);
 }
 
 PROVIDED_TEST("Simple knapsack examples.") {

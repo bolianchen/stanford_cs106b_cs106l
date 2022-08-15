@@ -27,8 +27,16 @@ using namespace std;
  */
 
 int fewestCoinsFor(int cents, Set<int>& coins) {
-    // TODO: Your code here
-    return 0;
+    if (cents == 0) {
+        return 0;
+    }
+    int minCount = cents + 1;
+    for (int coin: coins) {
+        if (cents >= coin) {
+            minCount = min(minCount, 1 + fewestCoinsFor(cents - coin, coins));
+        }
+    }
+    return minCount;
 }
 
 

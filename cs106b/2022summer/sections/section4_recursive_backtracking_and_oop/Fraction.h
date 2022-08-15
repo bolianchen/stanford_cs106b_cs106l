@@ -12,6 +12,9 @@ public:
     double decimal();
     int getNumer();
     int getDenom();
+    void reciprocal();
+    void divide(const Fraction &f);
+
     friend ostream& operator<<(ostream& out, const Fraction &frac);
 private:
     int numer;   // stores the numerator of the fraction

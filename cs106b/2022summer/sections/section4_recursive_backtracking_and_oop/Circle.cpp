@@ -5,39 +5,41 @@ using namespace std;
 #include "strlib.h"
 
 /**
- * TODO: write a method comment
+ * construct a new circle with the given radius
+ * @r radius
  */
-Circle::Circle(double r) {
-
+Circle::Circle(double radius) {
+    this->radius = radius;
 }
 
 
 /**
- * TODO: write a method comment
+ * compute the area of the circle
  */
 double Circle::area() const {
-    return 0.0;
+    return PI * pow(radius, 2);
 }
 
 /**
- * TODO: write a method comment
+ * compute the circumference of the circle
  */
 double Circle::circumference() const{
-    return 0.0;
+    return 2 * PI * radius;
 }
 
 /**
- * TODO: write a method comment
+ * get the radius of the circle
  */
 double Circle::getRadius() const{
-    return 0.0;
+    return radius;
 }
 
 /**
- * TODO: write a method comment
+ * returns a string representation for the circle such as
+ * "Circle{radius=2.5}"
  */
 string Circle::toString() const{
-    return "";
+    return "Circle{radius=" + realToString(radius) + "}";
 }
 
 /* Provided Tests Below This Line */

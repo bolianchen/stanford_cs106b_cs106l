@@ -28,13 +28,33 @@ bool login(string password) {
     return (password == "csizawesome");
 }
 
-
-
-string crackingPasswords(int n){
-    // TODO: Your code here
-    return "";
+string crackingPasswordsHelper(int maxLength, string soFar) {
+    if (login(soFar)) {
+        return soFar;
+    } else if (soFar.size() == maxLength) {
+        return "";
+    } else {
+        for (char c = 'a'; c <= 'z'; c++) {
+            string password = crackingPasswordsHelper(maxLength, soFar + c);
+            if (password != "") {
+                return password;
+            }
+            char upperC = toupper(c);
+            password = crackingPasswordsHelper(maxLength, soFar + upperC);
+            if (password != "") {
+                return password;
+            }
+        }
+        return "";
+    }
 }
 
+string crackingPasswords(int n){
+    if (n < 0) {
+        error("n cannot be negative");
+    }
+    return crackingPasswordsHelper(n, "");
+}
 
 /* * * * * Provided Tests Below This Point * * * * */
 
