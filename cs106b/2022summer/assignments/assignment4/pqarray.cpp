@@ -30,11 +30,31 @@ PQArray::~PQArray() {
 }
 
 /*
- * TODO: Replace this comment with a descriptive function
- * comment about your implementation of the function.
+ * Add the new element onto the end of the array and then proceed to swap it with its left neighbor
+ * until it settles into correct position
  */
 void PQArray::enqueue(DataPoint elem) {
-    /* TODO: Implement this function. */
+    if (size() == _numAllocated) expandCapacity();
+    int index = _numFilled;
+    _elements[index] = elem;
+    while (index > 0 && _elements[index].priority > _elements[index-1].priority) {
+        swap(index, index-1);
+        index--;
+    }
+    _numFilled++;
+}
+
+/*
+ * Private member function. It expands the queue capacity when it is full
+ */
+void PQArray::expandCapacity() {
+    DataPoint* oldElements = _elements;
+    _numAllocated *= 2;
+    _elements = new DataPoint[_numAllocated];
+    for (int i = 0; i < _numFilled; i++) {
+        _elements[i] = oldElements[i];
+    }
+    delete[] oldElements;
 }
 
 /*
@@ -89,6 +109,7 @@ void PQArray::clear() {
     _numFilled = 0;
 }
 
+
 /*
  * Private member function. This helper exchanges the element at
  * indexA with the element at indexB.
@@ -134,8 +155,6 @@ void PQArray::validateInternalState() const {
 }
 
 /* * * * * * Test Cases Below This Point * * * * * */
-
-/* TODO: Add your own custom tests here! */
 
 
 
@@ -308,4 +327,55 @@ PROVIDED_TEST("PQArray timing test, fillQueue and emptyQueue") {
 
     TIME_OPERATION(n, fillQueue(pq, n));
     TIME_OPERATION(n, emptyQueue(pq, n));
+}
+
+
+/* TODO: Add your own custom tests here! */
+
+STUDENT_TEST("PQArray stress test, first enqueue half and then enqueue and dequeue randomly") {
+    PQArray pq;
+    int n = 0, maxEnqueues = 1000;
+
+    setRandomSeed(1128); // make test behavior deterministic
+
+    while (true) {
+        if (n++ < maxEnqueues/2) {
+            DataPoint elem = { "", randomReal(-100.0, 100)};
+            pq.enqueue(elem);
+            pq.validateInternalState();
+        } else if (n++ < maxEnqueues && randomChance(0.6)) {
+            DataPoint elem = { "", randomReal(-100.0, 100)};
+            pq.enqueue(elem);
+            pq.validateInternalState();
+        } else {
+            pq.dequeue();
+            pq.validateInternalState();
+            if (pq.isEmpty()) break;
+        }
+    }
+}
+
+STUDENT_TEST("PQArray timing test, fillQueue-1") {
+    PQArray pq;
+    TIME_OPERATION(10000, fillQueue(pq, 10000));
+}
+STUDENT_TEST("PQArray timing test, fillQueue-2") {
+    PQArray pq;
+    TIME_OPERATION(20000, fillQueue(pq, 20000));
+}
+STUDENT_TEST("PQArray timing test, fillQueue-3") {
+    PQArray pq;
+    TIME_OPERATION(40000, fillQueue(pq, 40000));
+}
+STUDENT_TEST("PQArray timing test, fillQueue-4") {
+    PQArray pq;
+    TIME_OPERATION(80000, fillQueue(pq, 80000));
+}
+
+STUDENT_TEST("PQArray timing test, emptyQueue") {
+    PQArray pq;
+    for (int i = 40000; i <= 160000; i+= 40000) {
+        fillQueue(pq, i);
+        TIME_OPERATION(i, emptyQueue(pq, i));
+    }
 }

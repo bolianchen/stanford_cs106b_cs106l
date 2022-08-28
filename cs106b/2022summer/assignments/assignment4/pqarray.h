@@ -100,6 +100,7 @@ private:
     int _numFilled;         // number of slots filled in array
 
     void swap(int indexA, int indexB);
+    void expandCapacity();
 
     /* Weird C++isms: C++ loves to make copies of things, which is usually a good thing but
      * for the purposes of this assignment requires some C++ knowledge we haven't yet covered.

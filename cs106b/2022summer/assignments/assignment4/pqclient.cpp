@@ -7,9 +7,6 @@
 #include "testing/SimpleTest.h"
 using namespace std;
 
-/* TODO: Refer to pqclient.h for more information about what this function does, then
- * delete this comment.
- */
 void pqSort(Vector<DataPoint>& v) {
     PQArray pq;
 
@@ -30,12 +27,26 @@ void pqSort(Vector<DataPoint>& v) {
     }
 }
 
-/* TODO: Refer to pqclient.h for more information about what this function does, then
- * delete this comment.
- */
 Vector<DataPoint> topK(istream& stream, int k) {
-    /* TODO: Implement this function. */
-    return {};
+    PQArray pq;
+    DataPoint cur;
+    while (stream >> cur) {
+        if (pq.size() < k) {
+            pq.enqueue(cur);
+        } else {
+            if (cur.priority > pq.peek().priority) {
+                pq.dequeue();
+                pq.enqueue(cur);
+            }
+        }
+    }
+    // initialize a vector storing copies of DataPoints
+    // with default constructor
+    Vector<DataPoint> descendingK(pq.size(), DataPoint());
+    for (int i = pq.size()-1; i >= 0; i--) {
+        descendingK.set(i, pq.dequeue());
+    }
+    return descendingK;
 }
 
 
@@ -65,22 +76,11 @@ stringstream asStream(int start, int stop) {
 void fillVector(Vector<DataPoint>& vec, int n) {
     vec.clear();
     for (int i = 0; i < n; i++) {
-        DataPoint pt = { "", randomReal(0, 100) };
+        //DataPoint pt = { "", randomReal(0, 100) };
+        DataPoint pt = { "", i };
         vec.add(pt);
     }
 }
-
-/* TODO: Add your own custom tests here! */
-
-
-
-
-
-
-
-
-
-
 
 
 /* * * * * Provided Tests Below This Point * * * * */
@@ -194,3 +194,33 @@ PROVIDED_TEST("topK: time trial") {
     }
 }
 
+
+/* TODO: Add your own custom tests here! */
+
+STUDENT_TEST("pqSort timing test") {
+    for (int num = 20000; num <= 160000; num *= 2) {
+        Vector<DataPoint> vec;
+        for (int i = 0; i < num; i++) {
+            DataPoint dp = {integerToString(i), randomReal(0.0, 100.0)};
+            vec.add(dp);
+        }
+        TIME_OPERATION(num, pqSort(vec));
+    }
+}
+
+STUDENT_TEST("topK: time trial with the worst input and varying n") {
+    int k = 10;
+    for (int n = 200000; n <= 1600000; n *= 2) {
+        stringstream stream = asStream(0, n);
+        TIME_OPERATION(n, topK(stream, k));
+
+    }
+}
+
+STUDENT_TEST("topK: time trial with the worst input and varying k") {
+    int n = 100000;
+    for (int k = 500; k <= 4000; k *= 2) {
+        stringstream stream = asStream(0, n);
+        TIME_OPERATION(k, topK(stream, k));
+    }
+}

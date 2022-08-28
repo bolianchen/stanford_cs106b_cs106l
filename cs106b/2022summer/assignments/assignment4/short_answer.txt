@@ -32,24 +32,62 @@ the content stored before deletion was still there
 PQArray
 -------
 Q5. There are extensive comments in both the interface (`pqarray.h`) and implementation (`pqarray.cpp`). Explain how and why the comments in the interface differ from those in the implementation. Consider both the content and audience for the documentation.
-A5. TODO
+A5. the interface is for client, so its focus is how to use the library or the class. the implementation reveals more details for implementers.
 
 Q6. The class declares member variables `_numAllocated` and `_numFilled`. What is the difference between these two counts and why are both needed?
-A6. TODO
+A6. _numAllocated represents the capacity of the queue;  _numFilled represents how many elements have been put into the queue.
+    To use memory efficiently, additional memory is allocated when _numAllocated == numFilled.
 
 Q7. Although code within the body of a member function can directly access the object's member variables, the implementer may instead choose to call public member functions to get information about the object. For example, note how the operations `isEmpty()` and `peek()` intentionally call `size()` instead of using `_numFilled` or how `dequeue()` calls `peek()` to retrieve the frontmost element. Why might be this be considered a better design?
-A7. TODO
+A7. It avoid code duplicates. Less places need to be revised when there are implementation changes.
 
 Q8. Give the results from your time trials and explain how they support your prediction for the Big-O runtimes of  `enqueue` and `dequeue`.
-A8. TODO
+A8.
+Each dequeue takes O(1), so the n operations would take O(n)
+        n (operations)  time (sec)
+        40000		0.001
+        80000		0.003
+        120000		0.005
+        160000		0.007
+Each enqueue takes O(n), so the n operations would take O(n^2) (1 + 2 + …+ n)
+        n (operations)  time (sec)
+        10000		0.64
+        20000		2.63
+        40000		11.03
+        80000		39.82
 
 PQ Client
 ---------
 Q9. Based on the Big O of `enqueue`/`dequeue`, what do you expect for the Big O of `pqSort` if using a `PQArray`? Run some timing trials to confirm your prediction, and include that data in your answer.
-A9. TODO
+A9. enqueuing n elements would take time proportional to n^2 and dequeuing n elements takes time proportional to n.
+Therefore, the BigO is O(n^2)
+  n         time (sec)
+20000         2.512
+40000         9.987
+80000         39.475
+160000       157.879
 
 Q10. Based on the Big O of `enqueue`/`dequeue`, what do you expect for the Big O of `topK` in terms of `k` and `n` if using a `PQArray`? Run some timing trials to confirm your prediction, and include that data in your answer.
-A10. TODO
+A10. There are respectively n enqueues and n dequeues. With the assumption that n is much larger than k,
+the runtime would be n * O(k) + n * O(1) ~ O(nk).
+
+It is important to apply stringstream asStream(int start, int stop) to create an ascending sequence,
+which would induce enqueue for each iteration and the number of array elements swap would be linear for each enqueue.
+
+Fix k, vary n
+n		k		time(sec)
+200,000		10		0.273
+400,000		10		0.543
+800,000		10		1.092
+1600,000	10		2.185
+
+Fix n, vary k
+n		k		time(sec)
+100,000		500		1.330
+100,000		1000		2.642
+100,000		2000		5.123
+100,000		4000		10.033
+
 
 PQHeap
 ------
