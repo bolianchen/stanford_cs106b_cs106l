@@ -9,12 +9,13 @@ using namespace std;
  * do NOT edit the value of kYourName. Changing kYourName will change which
  * maze you get back, which might invalidate all your hard work!
  */
-const string kYourName = "TODO";
+const string kYourName = "BolianChen";
 
 /* Change this constant to the path out of your labyrinth. */
-const string kPathOutOfNormalMaze = "TODO";
+const string kPathOutOfNormalMaze = "WSESSWWEENWENWNWWSSE";
 
 /**
+ * assume the provided start pointer is not nullptr
  * Given a location in a maze, returns whether the given sequence of
  * steps will let you escape the maze.
  *
@@ -23,7 +24,33 @@ const string kPathOutOfNormalMaze = "TODO";
  * and you can't move in directions that don't exist in the maze.
  */
 bool isPathToFreedom(MazeCell* start, string moves, Set<string> needs) {
-    /* TODO: Your code here */
+
+    needs.remove(start->contents);
+    if (needs.isEmpty()) return true;
+    MazeCell* curCell = start;
+    for (int i = 0; i < moves.length(); i++) {
+        MazeCell* nextCell;
+        switch(moves[i]) {
+            case 'N':
+                nextCell = curCell->north;
+                break;
+            case 'S':
+                nextCell = curCell->south;
+                break;
+            case 'E':
+                nextCell = curCell->east;
+                break;
+            case 'W':
+                nextCell = curCell->west;
+                break;
+            default:
+                error(string("invalid move ") + moves[i]);
+        }
+        if (nextCell == nullptr) return false;
+        curCell = nextCell;
+        needs.remove(curCell->contents);
+        if (needs.isEmpty()) return true;
+    }
     return false;
 }
 

@@ -31,7 +31,7 @@ This error is raised by system functions that detect corrupt state
 Labyrinth
 ---------
 Q5. What is a different legal path through the example labyrinth that gathers all three needed items?
-A5. TODO
+A5. WNNEWSSEESNWSWWN
 
 Sorting Linked Lists
 ---------------------
