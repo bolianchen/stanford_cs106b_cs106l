@@ -36,13 +36,34 @@ A5. WNNEWSSEESNWSWWN
 Sorting Linked Lists
 ---------------------
 Q6. If the `deallocateList` utility function were implemented recursively, give a rough estimate of the maximum length list it could successfully handle. What would be the observed result from attempting to deallocate a list longer than this maximum?
-A6. TODO
+A6. The maximum length would be around 16225. Deallocating a list longer than the limit would induce stack overflow.
 
 Q7. The prototype for the sort function takes a `ListNode*` by reference. Explain why the pointer itself needs to be passed by reference and what the consequence would be if it were not.
-A7. TODO
+A7. Passing the pointer by reference is to ensure we can change where it points to.
+    Otherwise, the original pointer would point to the same ListNode rather than the head of the rewired linked list.
 
 Q8. Run time trials and provide your results that confirm that QuickSort is O(NlogN) . Verify the runtime degrades to O(N^2) on inputs constructed to trigger the worst case behavior.
-A8. TODO
+A8.
+inputs consists of random integers
+    n        time(sec)
+ 4,000,000   7.523
+ 8,000,000   17.465
+ 16,000,000  40.588
+ 32,000,000  94.811
+
+quickSort on the inputs triggering the worst case would have one recursion for each single element. Therefore, the maximum element number to test are constrained.
+    n    time(sec)
+ 1,000    0.004
+ 2,000    0.029
+ 4,000    0.082
+ 8,000    0.290
 
 Q9. Run the provided timing trials that compare your linked list QuickSort to a Vector sort on the same sequence and report the results. Who wins and why?
-A9. TODO
+A9.
+inputs composed of randomInteger(-10000, 10000)
+    n             linked list quicksort (sec)    vector quicksort (sec)
+  500,000                 0.355                        1.282
+ 1,000,000                1.288                        2.563
+ 2,000,000                3.319                        5.164
+ 4,000,000                7.205                       10.471
+ The linked list quicksort wins probably because it was implemented with 3-way partition.
