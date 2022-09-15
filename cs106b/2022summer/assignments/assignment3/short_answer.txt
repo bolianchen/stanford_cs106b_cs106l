@@ -1,0 +1,141 @@
+Before submitting this file, make sure that there are no more TODO
+placeholders remaining in the file (and remove this comment too).
+
+Fundamentals Warmup
+------
+Q1. Looking at a call stack listing in a debugger, what is the indication that the program being debugged uses recursion?
+A1. consecutive calls of the same function
+
+Q2. Subtract the innermost level number from the outermost to get the maximum count of stack frames that fit in the capacity of the call stack. How many stack frames fit in your system's call stack?
+A2. 16226 -1 = 16225
+
+Q3. Describe how the symptoms of infinite recursion differ from the symptoms of an infinite loop.
+A3. Infinite recursion would crash the program because the used memory exceeds system limit eventually.
+    Infinite loop can keep running.
+
+Q4. What is the pattern to which values of base number and exponent result in a test failure?
+A4.
+- the base of 0 raised to negative exponents
+- negative bases raised to even exponents
+
+Q5. Of the existing five cases, are there any that seem redundant and can be removed from the function? Which do you think are absolutely necessary? Are there any cases that you're unsure about?
+A5.
+- base < 0 is redundant since the same rule is applicable to it.
+- exp == 0 is absolutely necessary
+- base == 0 is reduntant
+
+Balanced Operators
+------
+Q6. Compare your recursive solution to the iterative approach used for the Check Balance problem in Section 1. Which version do you find easier to read and understand? In which version did you find it easier to confirm the correct behavior?
+A6.
+- The recursive version is shorter and elegant, and easier to read and understand.
+  Without the help of Stack, the iterative version would be harder to read through.
+- It is easier to confirm the correct behavior since you can monitor the whole process in a single stack frame.
+
+Merge Sorted Sequences
+------
+Q7. Give a rough estimate of the maximum length sequence that could be successfully merged on your system assuming a recursive implementation of binaryMerge.
+A7.
+Stack frames will be constructed since the initial state until the two input queues are empty.
+My system allows at most 16225 frames; therefore, the maximum length sequence that could be merged is 16224.
+
+Q8. What would be the observed behavior if attempting to recursively merge a sequence larger than that maximum?
+A8.The program would crash unexpectedly.
+
+Q9. Include the data from your execution timing and explain how it supports your Big O prediction for binaryMerge.
+A9. The implementation have linear time of iterations, and each iteration takes constant time to complete. So the run time is O(n).
+   n            time(sec)
+10,000,000       2.366
+20,000,000       4.537
+40,000,000       9.212
+80,000,000      18.526
+
+
+Q10. Include the data from your execution timing and explain how it supports your Big O prediction for naiveMultiMerge.
+A10. TODO
+
+Case#1: All n elements are uniformly distributed to k sequences:
+k * n/k + (k-1) * n/k + … + 2 * n/k + n/k = n/k * k(1 + k)/2 = n(1+k)/2 ~ O(nk)
+Case#2: All n elements are in a sequence and the other k-1 sequences are empty:
+n * k ~ O(nk)
+
+Fix k, vary n
+ k        n        time(sec)
+10      500,000      0.621
+10     1,000,000     1.324
+10     2,000,000     2.738
+10     4,000,000     5.495
+10     8,000,000     10.484
+
+Fix n, vary k
+n             k     time(sec)
+500,000       20     1.333
+500,000       40     2.795
+500,000       80     5.451
+500,000      160     10.215
+500,000      320     17.884
+
+Q11. Include the data from your execution timing and explain how it demonstrates O(n log k) runtime for recMultiMerge.
+A11.
+k             n            time(sec)
+100          1,000,000      1.731
+100          2,000,000      3.449
+100          4,000,000      6.907
+100          8,000,000      13.840
+100         16,000,000      27.758
+
+n              k           time(sec)
+10,000,000     2            2.578
+10,000,000     4            4.974
+10,000,000     16           9.899
+10,000,000     256         19.974
+10,000,000     65536       43.151
+
+Q12. You run recMultiMerge on a sequence of size 1 million and see that it completes just fine. Explain why this is not running afoul of the call stack capacity limitation. Hint: How many stack frames (levels) are expected to be on the call stack at the deepest point in the recursion in recMultiMerge?
+A12.
+There are mostly logk frames on the call stack; therefore, for a sequence of size 1 million,
+only 20 frames would be on the call stack in the worse case. (one element in each queue)
+
+Q13. A search engine can't read your mind (although some use personalization to try). If you search a term like "rice" that has many meanings, most search engines will show a few different guesses as to what you might be looking for among the top results: Rice University, what is rice, local restaurants that serve rice, how to cook rice, Rice University Athletics, nutrition of rice, and so on. Search engines often create ordered lists of the most "relevant" results for a certain query. Imagine that a search engine maintains an "ordered list of relevant results for Rice University" and an "ordered list of relevant results for how to cook rice." When the search term is ambiguous, like "rice," the engine shuffles the lists together.
+
+- How could you use your multi-merge algorithm to achieve a result like the search results you saw? Write a couple lines of pseudocode.
+- How would you decide when to shuffle together different meanings of a term and when to show only one? Please provide at least two specific scenarios as examples to explain your reasoning.
+A13.
+
+Q14. Sometimes search engines choose not to merge results and only show only one meaning or interpretation of a searched term. This often happens within a particular country or geographical area. For example, Katherine Ye & Rodrigo Ochigame show that searching the same term in different countries can deliver entirely different results, such as this search for the word "God." For more examples, see their Search Atlas.
+
+- What does geographical sorting of search results assume about the people who live in each country? At minimum, explain your reasoning in 2-3 sentences.
+A14.
+
+Q15. One concern raised with search engines is that they might show different results to different people based on location, language, and especially search history, isolating them from information that might help them understand more about the diverse world in which they live. You may have heard this phenomenon referred to as the creation of “filter bubbles” when the effects of this personalization are negative.
+
+- When would it be beneficial to show personalized search results? Provide a specific example of when you think it would be beneficial, and explain your reasoning.
+- Why might showing personalized results to only particular groups of people be an issue? Provide a specific example of when you think it would be harmful, and explain your reasoning.
+A15.
+
+Backtracking Warmup
+------
+Q16. What is the value of totalMoves after stepping over the call to moveTower in hanoiAnimation?
+A16. totalMoves = 15
+
+Q17. What is the value of the totalMoves variable after stepping over the first recursive sub-call? (In other words, within moveTower just after stepping over the first recursive sub-call to moveTower inside the else statement.)
+A17. totalMoves = 7
+
+Q18. After breaking at the base case of moveTower and then choosing Step Out, where do you end up? (What function are you in, and at what line number?) What is the value of the totalMoves variable at this point?
+A18. Still in moveTower function at line 67. totalMoves = 1
+
+Q19. What is the smallest possible input that you used to trigger the bug in the program?
+A19. A vector with a single non-zero element.
+
+Q20. Identify the one-character error in the code and explain why that one-character bug causes the function to return the output you see when running on the minimal input you listed above. You should be able to specifically account for how the error causes the result to change from “completely correct” to “terribly wrong.”
+A20. The equal sign in line 43 makes the 3rd argument as a shorthand assignment, so it changes sumSoFar by adding the value of the element at the current index to it.
+     Therefore, in the branch excluding that element sumSoFar was still changed.
+
+
+Voting (Please note that this part of A3 is completely optional and will only be considered for extra credit. If you did not submit code for this part of the assignment, Q19 and Q20 will not be considered.)
+------
+Q21. What is the Big O of computePowerIndex? Include your timing data and explain how it supports your reasoning.
+Q19: For each block, computing its corresponding power index takes 2^(n-1). There are n blocks, so its O(n * 2^(n-1)) = O(n*2^n)
+
+Q22. Use the Big O and timing data to estimate how long it would take to compute the power index for the 51 voting blocks in the U.S. Electoral College.
+A22. TODO
