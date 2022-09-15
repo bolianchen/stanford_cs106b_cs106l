@@ -95,7 +95,7 @@ public:
     void validateInternalState() const;
 
 private:
-    DataPoint* _elements;   // dynamic array
+    DataPoint *_elements;   // dynamic array
     int _numAllocated;      // number of slots allocated in array
     int _numFilled;         // number of slots filled in array
 

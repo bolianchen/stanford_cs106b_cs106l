@@ -92,13 +92,28 @@ n		k		time(sec)
 PQHeap
 ------
 Q11. Start with an empty binary heap and enqueue the nine `DataPoint`s in the order shown below and show the result. You only need to show the final heap, not intermediate steps. Draw the heap as tree-like diagram with root element on top, its two children below, and so on. Yes, we know that we're asking you to draw pictures in a text file (we love the [AsciiFlow](http://asciiflow.com/) tool for "drawing" in text).
-A11. TODO
+A11.
+                        “T”, 1**
+
+                “B”, 3.              “G”, 2
+
+        “S”, 6      “A”, 5       “V”, 9.   “R”, 4
+
+   “O”, 8.    “K”, 7
 
 Q12. Make two calls to `dequeue` on the above binary heap and draw the updated result.
-A12. TODO
+A12.
+                     “B”, 3
+
+            “A”, 5            “R”, 4
+
+        “S”, 6  “O”, 8   “V”, 9.   “K”, 7
+
 
 Q13. Draw the array representation of the binary heap above. Label each element with its array index.
-A13. TODO
+A13.
+   0      1       2      3     4       5     6
+[”B” 3, “A” 5, “R” 4, “S” 6, “O” 8, “V” 9, “K” 7}
 
 Q14. Re-run the timing trials on `pqclient.cpp` and provide your results that confirm that `pqSort` runs in time O(NlogN) and `topK` in O(NlogK).
 A14. TODO

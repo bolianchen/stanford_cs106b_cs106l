@@ -355,26 +355,16 @@ STUDENT_TEST("PQArray stress test, first enqueue half and then enqueue and deque
     }
 }
 
-STUDENT_TEST("PQArray timing test, fillQueue-1") {
-    PQArray pq;
-    TIME_OPERATION(10000, fillQueue(pq, 10000));
-}
-STUDENT_TEST("PQArray timing test, fillQueue-2") {
-    PQArray pq;
-    TIME_OPERATION(20000, fillQueue(pq, 20000));
-}
-STUDENT_TEST("PQArray timing test, fillQueue-3") {
-    PQArray pq;
-    TIME_OPERATION(40000, fillQueue(pq, 40000));
-}
-STUDENT_TEST("PQArray timing test, fillQueue-4") {
-    PQArray pq;
-    TIME_OPERATION(80000, fillQueue(pq, 80000));
+STUDENT_TEST("PQArray timing test, fillQueue") {
+    for (int size = 10000; size <= 80000; size *= 2) {
+        PQArray pq;
+        TIME_OPERATION(size, fillQueue(pq, size));
+    }
 }
 
 STUDENT_TEST("PQArray timing test, emptyQueue") {
-    PQArray pq;
     for (int i = 40000; i <= 160000; i+= 40000) {
+        PQArray pq;
         fillQueue(pq, i);
         TIME_OPERATION(i, emptyQueue(pq, i));
     }
